@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Bulma -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <!-- Font Awesome Icons -->
+    <script src="https://use.fontawesome.com/releases/v5.14.0/js/all.js" defer></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="index.css">
+
+    <!-- JS -->
+    <script src="./app/map.js" defer></script>
+    <script src="./app/csv.js" defer></script>
+
+    <!-- Google Maps API -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default" defer></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8LwmFuSg6Hl0d2U-rRUARlatj7uf5Ync&callback=initMap&libraries=visualization"
+        defer>
+    </script>
+
+    <title>NO2 Drone Sensor</title>
+</head>
+
+<body>
+
+    <nav>
+        <input type="file" id="upload-file" onchange="readImage(this)">
+    </nav>
+
+    <div id="map"></div>
+
+</body>
+
+</html>

@@ -1,5 +1,5 @@
-The "serialconn.py" script is proven to work under python 2.7 on a Ubuntu-based System and Debian Based OS (RPI)
-The "test.csv" file is a temporary file that will store the DGS-NO2 Sensor data
+The "serialconn.py" script is proven to work under python 2.7 on a Ubuntu-based System and Debian Based OS (RPI).
+The "test.csv" file is a temporary file that will store the DGS-NO2 Sensor data.
 
 To ensure that the script "serialconn.py" runs properly, you MUST install the pyserial library.
 You can do so by installing python, curl, and pip:

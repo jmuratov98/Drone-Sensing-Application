@@ -1,4 +1,5 @@
 The "serialconn.py" script is proven to work under python 2.7 on a Ubuntu-based System and Debian Based OS (RPI)
+The "test.csv" file is a temporary file that will store the DGS-NO2 Sensor data
 
 To ensure that the script "serialconn.py" runs properly, you MUST install the pyserial library.
 You can do so by installing python, curl, and pip:
@@ -39,24 +40,22 @@ You can do so by installing python, curl, and pip:
 	** This will allow us to interface with the DGS-NO2 sensor via SSH **
 
 
-In order to make serial connection work, you MUST do the following in the Linux Terminal:
+In order to make the SSH connection work, you MUST do the following in the Linux Terminal:
  
 	1. Copy python file to /bin (needed to access for Raspberry Pi to run script)
 		sudo cp -i [Where repo is stored]/Drone-Sensing-Application/autom/serialconn.py /bin
-    	
     	2. Ensure "serianconn.py" is stored in the /bin directory
-    		cd /bin
-	
-	2. Add a new Cron Job (Allows you to run scripts at any time(s) or time interval)
+    		cd /bin	
+	3. Add a new Cron Job (Allows you to run scripts at any time(s) or time interval)
 		sudo crontab -e
-    	3. Add the following line at the very bottom (after all the comments)
+	4. Add the following line at the very bottom (after all the comments)
 		@reboot python /bin/serialconn.py &
 
-    		** "&" symbol signifies command is run in the background and doesn't stop the system from booting up **
-    	4. Test
+    	   ** "&" symbol signifies command is run in the background and doesn't stop the system from booting up **
+    	5. Test
 		sudo reboot
-    	5. Ensure CSV file has correct information from DGS-NO2 Sensor. Open the terminal and type:
+    	6. Ensure CSV file has correct information from DGS-NO2 Sensor. Open the terminal and type:
    		cd /bin
    		nano test.csv
-   	6. That's It!
+   	7. That's It!
 

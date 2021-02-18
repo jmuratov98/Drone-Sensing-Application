@@ -51,11 +51,11 @@ In order to make the SSH connection work, you MUST do the following in the Linux
 	4. Add the following line at the very bottom (after all the comments)
 		@reboot python /bin/serialconn.py &
 
-    	   ** "&" symbol signifies command is run in the background and doesn't stop the system from booting up **
-    	5. Test
+    	   ** "&" symbol signifies command is run in the background and doesn't stop the system from booting up 
+	5. Test
 		sudo reboot
-    	6. Ensure CSV file has correct information from DGS-NO2 Sensor. Open the terminal and type:
+  	6. Ensure CSV file has correct information from DGS-NO2 Sensor. Open the terminal and type:
    		cd /bin
    		nano test.csv
-   	7. That's It!
+	7. That's It!
 

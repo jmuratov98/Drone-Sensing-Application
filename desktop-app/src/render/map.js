@@ -40,6 +40,7 @@ function generateHeatMap() {
 }
 
 function updateHeatMap() {
+    if(!data) return; // Guard clause to make sure undefined data wont go through
     const heatmapData = data
         .filter(dp => { let temp = dp.Height - height; return (temp >= 0 && temp < 10) })
         .map(dp => (

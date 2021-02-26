@@ -45,6 +45,7 @@
     }
   },
   "dependencies": {
+    "@fast-csv/parse": "^4.3.6",
     "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {

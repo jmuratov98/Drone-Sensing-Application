@@ -20,14 +20,25 @@
     <!-- Google Maps API -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default" defer></script>
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8LwmFuSg6Hl0d2U-rRUARlatj7uf5Ync&callback=initMap&libraries=visualization"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8LwmFuSg6Hl0d2U-rRUARlatj7uf5Ync&libraries=visualization&callback=initMap"
         defer>
-    </script>
+        </script>
 
     <title>NO2 Drone Sensor</title>
 </head>
 
 <body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <input type="range" min="0" max="1000" value="0" step="10">
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+    </nav>
     <div id="map"></div>
 </body>
 

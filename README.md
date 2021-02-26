@@ -2,7 +2,7 @@
 
 The main repository for our project
 
-- ***autom*** - TODO: Add something here
+- ***Automation*** - Automation code for the controller
 - ***TSD Desktop App*** - The main desktop application to view the heatmap
 
 ## Getting Started ##

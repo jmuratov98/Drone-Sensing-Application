@@ -35,21 +35,11 @@ function initMap() {
 function generateHeatMap() {
     map.setCenter(new google.maps.LatLng(data[0]['Latitude'], data[0]['Longitude']));
     map.setZoom(13);
-
-    const heatmapData = data
-        .filter(dp => { let temp = dp.Height - height; return (temp >= 0 && temp < 10) })
-        .map(dp => {
-            return {
-                location: new google.maps.LatLng(dp['Latitude'], dp['Longitude']), weight: dp[1] / 1000
-            }
-        });
-    heatmap = new google.maps.visualization.HeatmapLayer({ data: heatmapData });
-    heatmap.setMap(map)
-    console.log(heatmap);
+    heatmap = new google.maps.visualization.HeatmapLayer({ data: [] });
+    updateHeatMap();
 }
 
 function updateHeatMap() {
-    heatmap.setMap(null);
     const heatmapData = data
         .filter(dp => { let temp = dp.Height - height; return (temp >= 0 && temp < 10) })
         .map(dp => {

@@ -42,11 +42,9 @@ function generateHeatMap() {
 function updateHeatMap() {
     const heatmapData = data
         .filter(dp => { let temp = dp.Height - height; return (temp >= 0 && temp < 10) })
-        .map(dp => {
-            return {
-                location: new google.maps.LatLng(dp['Latitude'], dp['Longitude']), weight: dp[1] / 1000
-            }
-        });
+        .map(dp => (
+            { location: new google.maps.LatLng(dp['Latitude'], dp['Longitude']), weight: dp[1] / 1000 }
+        ));
     heatmap.setData(heatmapData);
     heatmap.setMap(map);
 }

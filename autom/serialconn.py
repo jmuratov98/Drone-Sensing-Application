@@ -6,7 +6,7 @@ ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600) # Serial port connection (s
 #print(ser.name)
 ser.write('\r') # Exit Low Power Mode (can be any key)
 time.sleep(1)
-shutil.copy(src="/home/pi/Drone-Sensing-Application/autom/test.csv", dst="/bin/test.csv")
+#shutil.copy(src="/home/pi/Drone-Sensing-Application/autom/test.csv", dst="/bin/test.csv")
 text_file = open("test.csv", "w") # Open Text File with write permissions
 
 while i < 7:        # Amount of Times to read output (TTC - Time To Collect before moving GPS Location)
@@ -24,4 +24,7 @@ while i < 7:        # Amount of Times to read output (TTC - Time To Collect befo
 text_file.close()
 ser.close() # Close Serial port 
 
-shutil.copy(src="/bin/testing.csv", dst="/media/pi/USB/testing.csv") #copies file from RPI to USB Drive
+#shutil.copy(src="/bin/testing.csv", dst="/media/pi/USB/testing.csv") #copies file from RPI to USB Drive
+
+#when doing cronjob, do this:
+# @reboot  /bin/python /home/pi/Drone-Sensing-Application/autom/serialconn,py

@@ -24,7 +24,7 @@ while i < 7:        # Amount of Times to read output (TTC - Time To Collect befo
 text_file.close()
 ser.close() # Close Serial port 
 
-#shutil.copy(src="/bin/testing.csv", dst="/media/pi/USB/testing.csv") #copies file from RPI to USB Drive
+shutil.copy(src="/home/pi/Drone-Sensing-Application/autom/test.csv", dst="/media/pi/USB/test.csv") #copies file from RPI to USB Drive
 
 #when doing cronjob, do this:
 # @reboot  /bin/python /home/pi/Drone-Sensing-Application/autom/serialconn,py

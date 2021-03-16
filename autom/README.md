@@ -41,6 +41,7 @@ You can do so by installing python, curl, and pip:
 
 
 In order to make the SSH connection work, you MUST do the following in the Linux Terminal:
+
 	1. Add a new Cron Job (Allows you to run scripts at any time(s) or time interval)
 		sudo crontab -e -u pi
 	2. Add the following line at the very bottom (after all the comments)

@@ -1,9 +1,7 @@
 import serial, string, time
-import shutil
 import os
 import csv
 
- 
 i = 0 # Initializer of amount of data to be collected
 ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600) # Serial port connection (subject to change on RPI)
 #print(ser.name)

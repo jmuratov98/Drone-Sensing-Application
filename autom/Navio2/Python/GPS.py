@@ -1,7 +1,7 @@
 import navio.util
 import navio.ublox
 import csv
-import shutil, time
+import os, time
 
 i = 0;
 text_file = open("GPSData.csv", 'w+')
@@ -75,3 +75,4 @@ if __name__ == "__main__":
 #            i += 1
         #print(str(msg))
 text_file.close()
+os.system('sudo cp -f /home/pi/Drone-Sensing-Application/autom/Navio2/Python/GPSData.csv /media/usb/GPSDat.csv')

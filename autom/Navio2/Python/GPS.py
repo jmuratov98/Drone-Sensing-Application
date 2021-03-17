@@ -1,6 +1,12 @@
 import navio.util
 import navio.ublox
+import csv
+import shutil, time
 
+i = 0;
+text_file = open("GPSData.csv", 'w+')
+csvwriter = csv.writer(text_file)
+csvwriter.writerow(['Longitude','Latitude','Height','hMSL','hACC','vACC'])
 
 if __name__ == "__main__":
 
@@ -39,8 +45,9 @@ if __name__ == "__main__":
     ubl.configure_message_rate(navio.ublox.CLASS_NAV, navio.ublox.MSG_NAV_CLOCK, 5)
     #ubl.configure_message_rate(navio.ublox.CLASS_NAV, navio.ublox.MSG_NAV_DGPS, 5)
 
-    while True:
+    while i < 7:
         msg = ubl.receive_message()
+#        print(msg)
         if msg is None:
             if opts.reopen:
                 ubl.close()
@@ -48,13 +55,23 @@ if __name__ == "__main__":
                 continue
             print(empty)
             break
-        #print(msg.name())
+#        print(msg.name())
         if msg.name() == "NAV_POSLLH":
-            outstr = str(msg).split(",")[1:]
+            outstr = str(msg) .split(",")[1:]
             outstr = "".join(outstr)
+            strings = ["Latitude=", "height=", "hMSL=", "vAcc=", "hAcc="] 
+            for s in strings:
+                outstr = outstr.replace(s, ",")
+            strings2= "Longitude="
+            outstr = outstr.replace(strings2, "")
+            outstr = outstr + '\n'
+            text_file.write(outstr)
             print(outstr)
-        if msg.name() == "NAV_STATUS":
-            outstr = str(msg).split(",")[1:2]
-            outstr = "".join(outstr)
-            print(outstr)
+            i += 1
+#        if msg.name() == "NAV_STATUS":
+#            outstr = str(msg).split(",")[1:2]
+#            outstr = "".join(outstr)
+#            print(outstr)
+#            i += 1
         #print(str(msg))
+text_file.close()

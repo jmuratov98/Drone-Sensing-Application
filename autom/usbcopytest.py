@@ -1,3 +1,3 @@
 import shutil
 
-shutil.copy(src="/bin/testing.csv", dst="/media/jon/USB/testing.csv")
+shutil.copyfile(src="/home/pi/Drone-Sensing-Application/autom/serialconn.py", dst="/media/usb/serialconn.py")

@@ -28,18 +28,25 @@
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="navbar-brand">
-            <input type="range" min="0" max="1000" value="0" step="10">
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
+    <div class="columns">
+        <div class="column is-three-quarters">
+            <div id="map"></div>
         </div>
-    </nav>
-    <div id="map"></div>
+        <div class="column">
+            <h1 class="title has-text-centered mt-2 mb-4">Data</h1>
+            <div>
+                Height: 
+                <input type="range" min="0" max="1000" value="0" step="10">
+                <span id="current-height">0</span>
+                meters
+            </div>
+            <div>
+                Average contents:
+                <span id="current-ppm"></span>
+                (bbm)
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

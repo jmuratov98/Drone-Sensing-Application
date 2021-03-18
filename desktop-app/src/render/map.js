@@ -7,6 +7,8 @@ let heatmap;
 let data;
 let rangeDOM;
 let height;
+let currentHeightSpan;
+let currentPPMSpan;
 
 // Events
 ipcRenderer.on('send-csv-file', async (_, file) => {
@@ -14,8 +16,9 @@ ipcRenderer.on('send-csv-file', async (_, file) => {
 });
 
 // DOM Elements
+currentHeightSpan = document.getElementById('current-height');
+currentPPMSpan = document.getElementById('current-ppm');
 rangeDOM = document.querySelector('input[type=range]');
-height = rangeDOM.height;
 rangeDOM.addEventListener('change', () => {
     height = rangeDOM.value;
     updateHeatMap();
@@ -42,11 +45,17 @@ function generateHeatMap() {
 
 function updateHeatMap() {
     if(!data) return; // Guard clause to make sure undefined data wont go through
-    console.log(data);
-    const heatmapData = data
-        .filter(dp => { let temp = dp.Height - height; return (temp >= 0 && temp < 10) })
+
+    const filteredData = data.filter(dp => { let temp = dp.Height - height; return (temp >= 0 && temp < 10) });
+
+    currentHeightSpan.innerText = height;
+    const avg = filteredData.reduce((sum, { PPB }) => sum + (PPB / 1000), 0) / data.length;
+    console.log(avg)
+    currentPPMSpan.innerText = avg;
+
+    const heatmapData = filteredData
         .map(dp => (
-            { location: new google.maps.LatLng(dp['Latitude'], dp['Longitude']), weight: dp[1] / 1000 }
+            { location: new google.maps.LatLng(dp['Latitude'], dp['Longitude']), weight: dp['PPB'] / 1000 }
         ));
     heatmap.setData(heatmapData);
     heatmap.setMap(map);

@@ -20,6 +20,9 @@ function convertData(data, row) {
         // Adding decimal points to longitude and latitude
         if(prop == 'Latitude') row[prop] = convertCoord(row[prop])
         if(prop == 'Longitude') row[prop] = convertCoord(row[prop])
+
+        // Cast PPB to int
+        if(prop == 'PPB') row['PPB'] = parseInt(row['PPB'], 10);
     }
     data.push(row);
 }

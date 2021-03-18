@@ -67,13 +67,14 @@ if __name__ == "__main__":
 				outstr = outstr.replace(s, ",")
 			strings2= "Longitude="
 			outstr = outstr.replace(strings2, "")
-			print(outstr)
-		ser.write('\r')
-		output = ser.readline()
-		fullstr = outstr + output
-		text_file.write(fullstr)
-		print(fullstr)
-		i += 1
+			#print(outstr)
+			ser.write('\r')
+			output = ser.readline()
+			fullstr = outstr + "," + output
+			text_file.write(fullstr)
+			print(fullstr)
+			time.sleep(1)
+			i += 1
 #ser.write('s') # Enter Low-power standby mode
 text_file.close()
 ser.close() # Close Serial port 

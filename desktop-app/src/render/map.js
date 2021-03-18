@@ -36,11 +36,13 @@ function generateHeatMap() {
     map.setCenter(new google.maps.LatLng(data[0]['Latitude'], data[0]['Longitude']));
     map.setZoom(13);
     heatmap = new google.maps.visualization.HeatmapLayer({ data: [] });
+    height = data[0]['Height'];
     updateHeatMap();
 }
 
 function updateHeatMap() {
     if(!data) return; // Guard clause to make sure undefined data wont go through
+    console.log(data);
     const heatmapData = data
         .filter(dp => { let temp = dp.Height - height; return (temp >= 0 && temp < 10) })
         .map(dp => (

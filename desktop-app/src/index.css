@@ -1,5 +1,4 @@
 *, *::before, *::after {
-
 }
 
 body {
@@ -8,7 +7,13 @@ body {
     height: 100vh;
 }
 
+.columns {
+    height: 100%;
+}
+
 #map {
     height: 100%;
 }
+
+
   

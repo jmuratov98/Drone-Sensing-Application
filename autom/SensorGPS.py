@@ -1,5 +1,5 @@
-import Navio2.Python.navio.util
-import Navio2.Python.navio.ublox
+import navio.util
+import navio.ublox
 import csv
 import os, time
 import serial, string

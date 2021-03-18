@@ -5,6 +5,7 @@ import os, time
 import serial, string
 
 i = 0;
+outstr = "";
 ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600) # Serial port connection (subject to change on RPI)
 #print(ser.name)
 ser.write('\r') # Exit Low Power Mode (can be any key)
@@ -12,7 +13,7 @@ time.sleep(1)
 
 text_file = open("TestData.csv", 'w+')
 csvwriter = csv.writer(text_file)
-csvwriter.writerow(['SN','PPB','T','RH','ADCR','TR','RHR','D','H','M','S','Longitude','Latitude','Height','hMSL','hACC','vACC'])
+csvwriter.writerow(['Longitude','Latitude','Height','hMSL','hACC','vACC','SN','PPB','T','RH','ADCR','TR','RHR','D','H','M','S'])
 
 if __name__ == "__main__":
 
@@ -52,15 +53,6 @@ if __name__ == "__main__":
     #ubl.configure_message_rate(navio.ublox.CLASS_NAV, navio.ublox.MSG_NAV_DGPS, 5)
 
     while i < 7:
-   	#print "SN            PPB  T  RH  ADCR   TR     RHR   D   H   M   S" #For Readability ONLY
-    	ser.write('\r')
-    	output = ser.readline()
-    	#text_file.write(output)
-    	#print output
-    	#print("Printed after 1 seconds")
-    	#output = " "
-    	time.sleep(1)
-
         msg = ubl.receive_message()
 #       print(msg)
         if msg is None:
@@ -79,11 +71,18 @@ if __name__ == "__main__":
                 outstr = outstr.replace(s, ",")
             strings2= "Longitude="
             outstr = outstr.replace(strings2, "")
-            outstr = outstr + '\n'
-	    fullstr = output + outstr
-            text_file.write(fullstr)
-            print(fullstr)
-            i += 1
+
+    	ser.write('\r')
+    	output = ser.readline()
+    	#text_file.write(output)
+    	#print output
+    	#print("Printed after 1 seconds")
+    	#output = " "
+    	#time.sleep(1)
+	fullstr = outstr + output
+        text_file.write(fullstr)
+        print(fullstr)
+        i += 1
 
 #ser.write('s') # Enter Low-power standby mode
 text_file.close()

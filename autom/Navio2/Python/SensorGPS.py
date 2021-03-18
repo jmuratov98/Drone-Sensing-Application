@@ -1,5 +1,5 @@
-import Navio2.Python.navio.util
-import Navio2.Python.navio.ublox
+import navio.util
+import navio.ublox
 import csv
 import os, time
 import serial, string
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     	#print output
     	#print("Printed after 1 seconds")
     	#output = " "
-    	#time.sleep(1)
+    	time.sleep(1)
 
         msg = ubl.receive_message()
 #       print(msg)

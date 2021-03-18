@@ -45,7 +45,7 @@ In order to make the SSH connection work, you MUST do the following in the Linux
 	1. Add a new Cron Job (Allows you to run scripts at any time(s) or time interval)
 		sudo crontab -e -u pi
 	2. Add the following line at the very bottom (after all the comments)
-		@reboot cd /home/pi/Drone-Sensing-Application/autom && /usr/bin/python serialconn.py 
+		@reboot cd /home/pi/Drone-Sensing-Application/autom/Navio2/Python && /usr/bin/python SensorGPS.py 
 	3. Test
 		sudo reboot
   	4. Ensure CSV file has correct information from DGS-NO2 Sensor. Open the terminal and type:

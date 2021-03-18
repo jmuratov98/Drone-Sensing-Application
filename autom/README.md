@@ -2,6 +2,7 @@ The "SensorGPS.py" script is proven to work under python 2.7 on a Ubuntu-based S
 The "TestData.csv" file is a temporary file that will store the DGS-NO2 Sensor data and ublox neo-m8n GPS Data.
 
 To do an SSH connection between the Raspberry Pi and your Computer, you can do the following:
+
 	1. (Regular Connection - NO SSH) Connect Raspberry Pi to your TV or Monitor. Make sure you have a Mouse and Keyboard
 	2. (SSH) on any SSH Connecting Software (ie. MobaXTerm, putty, VSCode, etc) and with an ether connection to your computer
             type as the url: navio.local and port 22
@@ -12,7 +13,7 @@ To ensure that the script "SensorGPS.py" runs properly, you MUST install the pys
 You can do so by installing python, curl, and pip:
 	
 	(For Python 2.7 Installation)
-	
+
 	Step 1: Check if python is installed on your computer by doing:
 		python --version
 	Step 2: If nothing pops up or is an older version of python, do the following:

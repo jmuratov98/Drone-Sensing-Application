@@ -1,8 +1,11 @@
 import navio.util
 import navio.ublox
+import navio.adc
 import csv
-import os, time
+import os, time, sys
 import serial, string
+
+#navio.util.check_apm()
 
 i = 0;
 outstr = "";
@@ -48,7 +51,13 @@ if __name__ == "__main__":
 	ubl.configure_message_rate(navio.ublox.CLASS_NAV, navio.ublox.MSG_NAV_CLOCK, 5)
 	#ubl.configure_message_rate(navio.ublox.CLASS_NAV, navio.ublox.MSG_NAV_DGPS, 5)
 	
-	while i < 7:
+	adc = navio.adc.ADC()
+	voltread = adc.read(2)/1000*11.3 #Initial Voltage value from Power Module (ADC0)
+	#currread = adc.read(3)/1000*17 #Initial Current value from Power Module (ADC1)
+	start_time = time.time() #in seconds
+	elapsedtime = 0 #in seconds
+	
+	while voltread > 12.7 & elapsedtime < 600: #Check if voltage goes below 12.7V or Elapsed time is 10 min
 		msg = ubl.receive_message()
 		#print(msg)
 		if msg is None:
@@ -75,6 +84,11 @@ if __name__ == "__main__":
 			print(fullstr)
 			time.sleep(1)
 			i += 1
+			
+			voltread = adc.read(2)/1000*11.3
+			#currread = adc.read(3)/1000*17
+			elapsedtime = time.time() - start_time
+			
 #ser.write('s') # Enter Low-power standby mode
 text_file.close()
 ser.close() # Close Serial port 

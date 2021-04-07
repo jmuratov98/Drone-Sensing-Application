@@ -46,7 +46,7 @@ if __name__ == "__main__":
     #ubl.configure_message_rate(navio.ublox.CLASS_NAV, navio.ublox.MSG_NAV_DGPS, 5)
     
     start_time = time.time() #in seconds
-	elapsedtime = 0 #in seconds
+    elapsedtime = 0 #in seconds
 
     while elapsedtime <= 300:
         msg = ubl.receive_message()

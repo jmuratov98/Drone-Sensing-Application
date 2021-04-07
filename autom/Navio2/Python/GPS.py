@@ -44,8 +44,11 @@ if __name__ == "__main__":
     ubl.configure_message_rate(navio.ublox.CLASS_NAV, navio.ublox.MSG_NAV_TIMEGPS, 5)
     ubl.configure_message_rate(navio.ublox.CLASS_NAV, navio.ublox.MSG_NAV_CLOCK, 5)
     #ubl.configure_message_rate(navio.ublox.CLASS_NAV, navio.ublox.MSG_NAV_DGPS, 5)
+    
+    start_time = time.time() #in seconds
+	elapsedtime = 0 #in seconds
 
-    while i < 7:
+    while elapsedtime <= 300:
         msg = ubl.receive_message()
 #        print(msg)
         if msg is None:
@@ -68,6 +71,8 @@ if __name__ == "__main__":
             text_file.write(outstr)
             print(outstr)
             i += 1
+            elapsedtime = time.time() - start_time
+            print(elapsedtime)
 #        if msg.name() == "NAV_STATUS":
 #            outstr = str(msg).split(",")[1:2]
 #            outstr = "".join(outstr)

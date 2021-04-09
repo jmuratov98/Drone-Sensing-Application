@@ -57,7 +57,7 @@ if __name__ == "__main__":
 	elapsedtime = 0 #in seconds
 	
 	while voltread >= 12.7 or elapsedtime <= 60: #Continue reading GPS+Sens until voltread < 12.7V or flight time > 10 min
-		while true:
+		while True:
 			try:
 				msg = ubl.receive_message()
 				#print(msg)

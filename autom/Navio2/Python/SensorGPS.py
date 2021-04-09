@@ -9,7 +9,7 @@ import serial, string
 
 i = 0;
 outstr = "";
-ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600) # Serial port connection (subject to change on RPI)
+ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600, write_timeout = 5) # Serial port connection (subject to change on RPI), write fails after 5 seconds of no data
 #print(ser.name)
 ser.write('\r') # Exit Low Power Mode (can be any key)
 time.sleep(1)
@@ -58,38 +58,46 @@ if __name__ == "__main__":
 	elapsedtime = 0 #in seconds
 	
 	while voltread >= 12.7 or elapsedtime <= 60: #Continue reading GPS+Sens until voltread < 12.7V or flight time > 10 min
-		msg = ubl.receive_message()
-		#print(msg)
-		if msg is None:
-			if opts.reopen:
-				ubl.close()
-				ubl = navio.ublox.UBlox("spi:0.0", baudrate=5000000, timeout=2)
-				continue
-			print(empty)
-			time.sleep(1)
-			break
-		#print(msg.name())
-		if msg.name() == "NAV_POSLLH":
-			outstr = str(msg) .split(",")[1:]
-			outstr = "".join(outstr)
-			strings = ["Latitude=", "height=", "hMSL=", "vAcc=", "hAcc="] 
-			for s in strings:
-				outstr = outstr.replace(s, ",")
-			strings2= "Longitude="
-			outstr = outstr.replace(strings2, "")
-			#print(outstr)
-			time.sleep(3)
-			ser.write('\r')
-			output = ser.readline()
-			fullstr = outstr + "," + output
-			text_file.write(fullstr)
-			print(fullstr)
-			i += 1
+		while true:
+			try:
+				msg = ubl.receive_message()
+				#print(msg)
+				if msg is None:
+					if opts.reopen:
+						ubl.close()
+						ubl = navio.ublox.UBlox("spi:0.0", baudrate=5000000, timeout=2)
+						continue
+					print(empty)
+					time.sleep(1)
+					break
+				#print(msg.name())		
+				if msg.name() == "NAV_POSLLH":
+					outstr = str(msg) .split(",")[1:]
+					outstr = "".join(outstr)
+					strings = ["Latitude=", "height=", "hMSL=", "vAcc=", "hAcc="] 
+				for s in strings:
+					outstr = outstr.replace(s, ",")
+				strings2= "Longitude="
+				outstr = outstr.replace(strings2, "")
+				#print(outstr)
+				time.sleep(3)
+				ser.write('\r')
+				output = ser.readline()
+				fullstr = outstr + "," + output
+			except SerialException:
+				print("No Data Received from NO2 Sensor, Try Again...")
+			except ValueError:
+				print("Parameter(s) are out of range, e.g. baud rate, data bits. Try Again..."
+			except SerialTimeoutException:
+				print("Time to read NO2 Data has ran out. Try Again...")			
+		text_file.write(fullstr)
+		print(fullstr)
+		i += 1
 			
-			voltread = adc.read(2)/1000*11.3
-			#currread = adc.read(3)/1000*17
-			elapsedtime = time.time() - start_time
-			print(elapsedtime)
+		voltread = adc.read(2)/1000*11.3
+		#currread = adc.read(3)/1000*17
+		elapsedtime = time.time() - start_time
+		print(elapsedtime)
 			
 #ser.write('s') # Enter Low-power standby mode
 text_file.close()

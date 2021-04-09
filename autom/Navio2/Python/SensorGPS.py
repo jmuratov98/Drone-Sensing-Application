@@ -57,7 +57,7 @@ if __name__ == "__main__":
 	start_time = time.time() #in seconds
 	elapsedtime = 0 #in seconds
 	
-	while voltread >= 12.7 or elapsedtime <= 600: #Continue reading GPS+Sens until voltread < 12.7V or flight time > 10 min
+	while voltread >= 12.7 or elapsedtime <= 60: #Continue reading GPS+Sens until voltread < 12.7V or flight time > 10 min
 		msg = ubl.receive_message()
 		#print(msg)
 		if msg is None:
@@ -66,6 +66,7 @@ if __name__ == "__main__":
 				ubl = navio.ublox.UBlox("spi:0.0", baudrate=5000000, timeout=2)
 				continue
 			print(empty)
+			time.sleep(1)
 			break
 		#print(msg.name())
 		if msg.name() == "NAV_POSLLH":
@@ -77,17 +78,18 @@ if __name__ == "__main__":
 			strings2= "Longitude="
 			outstr = outstr.replace(strings2, "")
 			#print(outstr)
+			time.sleep(3)
 			ser.write('\r')
 			output = ser.readline()
 			fullstr = outstr + "," + output
 			text_file.write(fullstr)
 			print(fullstr)
-			time.sleep(1)
 			i += 1
 			
 			voltread = adc.read(2)/1000*11.3
 			#currread = adc.read(3)/1000*17
 			elapsedtime = time.time() - start_time
+			print(elapsedtime)
 			
 #ser.write('s') # Enter Low-power standby mode
 text_file.close()

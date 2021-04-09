@@ -83,20 +83,19 @@ if __name__ == "__main__":
 				ser.write('\r')
 				output = ser.readline()
 				fullstr = outstr + "," + output
+				text_file.write(fullstr)
+				print(fullstr)
+				voltread = adc.read(2)/1000*11.3
+				#currread = adc.read(3)/1000*17
+				elapsedtime = time.time() - start_time
+				print(elapsedtime)
 				break #Break out of Try-Except if no errors are found
 			except SerialException:
 				print("No Data Received from NO2 Sensor, Try Again...")
 			except ValueError:
 				print("Parameter(s) are out of range, e.g. baud rate, data bits. Try Again..."
-			except SerialTimeoutException:
-				print("Time to read NO2 Data has ran out. Try Again...")
-		text_file.write(fullstr)
-		print(fullstr)
-		voltread = adc.read(2)/1000*11.3
-		#currread = adc.read(3)/1000*17
-		elapsedtime = time.time() - start_time
-		print(elapsedtime)
-			
+			#except SerialTimeoutException:
+				#print("Time to read NO2 Data has ran out. Try Again...")		
 #ser.write('s') # Enter Low-power standby mode
 text_file.close()
 ser.close() # Close Serial port 

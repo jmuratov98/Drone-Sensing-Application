@@ -7,7 +7,6 @@ import serial, string
 
 #navio.util.check_apm()
 
-i = 0;
 outstr = "";
 ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600, timeout = 5) # Serial port connection (subject to change on RPI), read fails after 5 seconds of no data
 #print(ser.name)
@@ -84,16 +83,15 @@ if __name__ == "__main__":
 				ser.write('\r')
 				output = ser.readline()
 				fullstr = outstr + "," + output
+				break #Break out of Try-Except if no errors are found
 			except SerialException:
 				print("No Data Received from NO2 Sensor, Try Again...")
 			except ValueError:
 				print("Parameter(s) are out of range, e.g. baud rate, data bits. Try Again..."
 			except SerialTimeoutException:
-				print("Time to read NO2 Data has ran out. Try Again...")			
+				print("Time to read NO2 Data has ran out. Try Again...")
 		text_file.write(fullstr)
 		print(fullstr)
-		i += 1
-			
 		voltread = adc.read(2)/1000*11.3
 		#currread = adc.read(3)/1000*17
 		elapsedtime = time.time() - start_time

@@ -8,7 +8,7 @@ import serial, string
 #navio.util.check_apm()
 
 outstr = "";
-ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600, timeout = 2) # Serial port connection (subject to change on RPI), read fails after 2 seconds of no data
+ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600) # Serial port connection (subject to change on RPI)
 #print(ser.name)
 ser.write('\r') # Exit Low Power Mode (can be any key)
 time.sleep(1)
@@ -74,28 +74,28 @@ if __name__ == "__main__":
 					outstr = str(msg) .split(",")[1:]
 					outstr = "".join(outstr)
 					strings = ["Latitude=", "height=", "hMSL=", "vAcc=", "hAcc="] 
-				for s in strings:
-					outstr = outstr.replace(s, ",")
-				strings2= "Longitude="
-				outstr = outstr.replace(strings2, "")
-				#print(outstr)
-				time.sleep(3)
-				ser.write('\r')
-				output = ser.readline()
-				fullstr = outstr + "," + output
-				text_file.write(fullstr)
-				print(fullstr)
-				voltread = adc.read(2)/1000*11.3
-				#currread = adc.read(3)/1000*17
-				elapsedtime = time.time() - start_time
-				print(elapsedtime)
-				break #Break out of Try-Except if no errors are found
-			except SerialException:
+					for s in strings:
+						outstr = outstr.replace(s, ",")
+					strings2= "Longitude="
+					outstr = outstr.replace(strings2, "")
+					#print(outstr)
+					#time.sleep(3)
+					ser.write('\r')
+					output = ser.readline()
+					fullstr = outstr + "," + output
+					text_file.write(fullstr)
+					print(fullstr)
+					voltread = adc.read(2)/1000*11.3
+					#currread = adc.read(3)/1000*17
+					elapsedtime = time.time() - start_time
+					print(elapsedtime, 'Seconds. Voltage Reading', voltread)
+					break #Break out of Try-Except if no errors are found
+			except serial.SerialException:
 				print("No Data Received from NO2 Sensor, Try Again...")
 			except ValueError:
-				print("Parameter(s) are out of range, e.g. baud rate, data bits. Try Again..."
-			#except SerialTimeoutException:
-				#print("Time to read NO2 Data has ran out. Try Again...")		
+				print("Parameter(s) are out of range, e.g. baud rate, data bits. Try Again...")
+			except serial.SerialTimeoutException:
+				print("Time to read NO2 Data has ran out. Try Again...")		
 #ser.write('s') # Enter Low-power standby mode
 text_file.close()
 ser.close() # Close Serial port 

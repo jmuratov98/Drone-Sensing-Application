@@ -9,7 +9,7 @@ import serial, string
 
 i = 0;
 outstr = "";
-ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600, write_timeout = 5) # Serial port connection (subject to change on RPI), write fails after 5 seconds of no data
+ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600, timeout = 5) # Serial port connection (subject to change on RPI), read fails after 5 seconds of no data
 #print(ser.name)
 ser.write('\r') # Exit Low Power Mode (can be any key)
 time.sleep(1)

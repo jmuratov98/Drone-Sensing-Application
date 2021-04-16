@@ -5,17 +5,16 @@ import csv
 import os, time, sys
 import serial, string
 
-#navio.util.check_apm()
-
-outstr = "";
-ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600, timeout = 2) # Serial port connection (subject to change on RPI)
+ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600, timeout=2) # Serial port connection (subject to change on RPI)
 #print(ser.name)
-#ser.write('\n') # Exit Low Power Mode (can be any key)
+usbmountpath = "/media/usb"
+if os.path.ismount(usbmountpath) == False:
+	ser.close()
+	sys.exit("Closed NO2 Sensor Connection. Reboot System with USB connected") # USB not mounted
 
 text_file = open("TestData.csv", 'w+')
 csvwriter = csv.writer(text_file)
 csvwriter.writerow(['Longitude','Latitude','Height','hMSL','hACC','vACC','SN','PPB','T','RH','ADCR','TR','RHR','D','H','M','S'])
-
 if __name__ == "__main__":
 
 	ubl = navio.ublox.UBlox("spi:0.0", baudrate=5000000, timeout=2)
@@ -55,6 +54,7 @@ if __name__ == "__main__":
 	start_time = time.time() #in seconds
 	elapsedtime = 0 #in seconds
 	ser.write('\r')
+	time.sleep(1)
 	
 	while voltread >= 12.7 and elapsedtime <= 60: #Continue reading GPS+Sens until voltread < 12.7V or flight time > 10 min
 		while True:
@@ -72,23 +72,17 @@ if __name__ == "__main__":
 				if msg.name() == "NAV_POSLLH":
 					outstr = str(msg) .split(",")[1:]
 					outstr = "".join(outstr)
-					strings = ["Latitude=", "height=", "hMSL=", "vAcc=", "hAcc="] 
+					strings = [" Latitude=", " height=", " hMSL=", " vAcc=", " hAcc="] 
 					for s in strings:
 						outstr = outstr.replace(s, ",")
-					strings2= "Longitude="
+					strings2= " Longitude="
 					outstr = outstr.replace(strings2, "")
 					#print(outstr)
 					ser.write('\r')
-					while True:
-						if ser.in_waiting==1:
-							#print(ser.in_waiting)
-							output = ser.readline()
-							ser.flush()
-							break
-						else:
-							continue
-					
-					fullstr = outstr + "," + output
+					output = ser.readline()
+					if len(output) < 60:
+						raise serial.SerialException
+					fullstr = outstr + ", " + output
 					text_file.write(fullstr)
 					print(fullstr)
 					voltread = adc.read(2)/1000*11.3
@@ -98,9 +92,6 @@ if __name__ == "__main__":
 					break #Break out of Try-Except if no errors are found
 			except serial.SerialException:
 				print("No Data Received from NO2 Sensor, Try Again...")
-			except ValueError:
-				print("Parameter(s) are out of range, e.g. baud rate, data bits. Try Again...")
-#ser.write('s') # Enter Low-power standby mode
 text_file.close()
 ser.close() # Close Serial port 
 os.system('sudo cp -f /home/pi/Drone-Sensing-Application/autom/Navio2/Python/TestData.csv /media/usb/GPSensData.csv')

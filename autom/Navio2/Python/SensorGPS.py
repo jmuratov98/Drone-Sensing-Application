@@ -62,37 +62,37 @@ if __name__ == "__main__":
 	ser.write('\r') #for turning on sensor
 	
 	while voltread >= 12.7 and elapsedtime <= 60: #Continue reading GPS+Sens until voltread < 12.7V or flight time > 10 min
-		try: #Try-Catch loop when SerialException error occurs
-			msg = ubl.receive_message()
-			if msg is None:
-				if opts.reopen:
-					ubl.close()
-					ubl = navio.ublox.UBlox("spi:0.0", baudrate=5000000, timeout=2) #timeout = 2
-					continue
-				print(empty)
-				break
-			#print(msg.name())		
-			if msg.name() == "NAV_POSLLH": #state to gether Lat, Long, etc.
-				outstr = str(msg) .split(",")[1:]
-				outstr = "".join(outstr)
-				strings = [" Latitude=", " height=", " hMSL=", " vAcc=", " hAcc="] 
-				for s in strings:
-					outstr = outstr.replace(s, ",")
-				strings2= " Longitude="
-				outstr = outstr.replace(strings2, "")
-				#print(outstr)
+		msg = ubl.receive_message()
+		if msg is None:
+			if opts.reopen:
+				ubl.close()
+				ubl = navio.ublox.UBlox("spi:0.0", baudrate=5000000, timeout=2) #timeout = 2
+				continue
+			print(empty)
+			break
+		#print(msg.name())		
+		if msg.name() == "NAV_POSLLH": #state to gether Lat, Long, etc.
+			outstr = str(msg) .split(",")[1:]
+			outstr = "".join(outstr)
+			strings = [" Latitude=", " height=", " hMSL=", " vAcc=", " hAcc="] 
+			for s in strings:
+				outstr = outstr.replace(s, ",")
+			strings2= " Longitude="
+			outstr = outstr.replace(strings2, "")
+			#print(outstr)
+		try: #Try-Except when SerialException error occurs
 			ser.write('\r')
 			output = ser.readline()
 			if len(output) < 60:
 				raise serial.SerialException
+		except serial.SerialException:
+			print("No Data Received from NO2 Sensor, Try Again...")
+		else:
 			fullstr = outstr + ", " + output
 			text_file.write(fullstr)
 			print(fullstr)
 			voltread = adc.read(2)/1000*11.3
 			elapsedtime = time.time() - start_time
-			print(elapsedtime, " Seconds Elapsed. Voltage Reading is: ", voltread)
-		except serial.SerialException:
-			print("No Data Received from NO2 Sensor, Try Again...")
 text_file.close()
 ser.close() # Close Serial port 
 os.system('sudo cp -f /home/pi/Drone-Sensing-Application/autom/Navio2/Python/TestData.csv /media/usb/GPSensData.csv')

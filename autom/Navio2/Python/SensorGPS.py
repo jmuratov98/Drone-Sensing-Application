@@ -69,7 +69,6 @@ if __name__ == "__main__":
 					if opts.reopen:
 						ubl.close()
 						ubl = navio.ublox.UBlox("spi:0.0", baudrate=5000000, timeout=2) #timeout = 2
-						raise serial.SerialException
 						continue
 					raise serial.SerialException
 					#print(empty)

@@ -58,7 +58,8 @@ if __name__ == "__main__":
 	
 	start_time = time.time() #in seconds
 	elapsedtime = 0 #in seconds
-	
+	outstr = ""
+	output = ""
 	ser.write('\r') #for turning on sensor
 	
 	while voltread >= 12.7 and elapsedtime <= 60: #Continue reading GPS+Sens until voltread < 12.7V or flight time > 10 min
@@ -69,9 +70,9 @@ if __name__ == "__main__":
 					ubl.close()
 					ubl = navio.ublox.UBlox("spi:0.0", baudrate=5000000, timeout=2) #timeout = 2
 					continue
-				raise serial.SerialException
-				#print(empty)
-				#break
+				#raise serial.SerialException
+				print(empty)
+				break
 			#print(msg.name())		
 			if msg.name() == "NAV_POSLLH": #state to gether Lat, Long, etc.
 				outstr = str(msg) .split(",")[1:]
@@ -84,8 +85,10 @@ if __name__ == "__main__":
 				#print(outstr)
 				ser.write('\r')
 				output = ser.readline()
-				if len(output) < 60:
+				if len(output) < 60 or len(outstr) == 0:
 					raise serial.SerialException
+			else:
+				raise serial.SerialException
 		except serial.SerialException:
 			print("No Data Received from NO2 Sensor, Try Again...")
 		else:
@@ -94,6 +97,7 @@ if __name__ == "__main__":
 			print(fullstr)
 			voltread = adc.read(2)/1000*11.3
 			elapsedtime = time.time() - start_time
+			print(elapsedtime, "seconds elapsed. Voltage Reading: ", voltread)
 text_file.close()
 ser.close() # Close Serial port 
 os.system('sudo cp -f /home/pi/Drone-Sensing-Application/autom/Navio2/Python/TestData.csv /media/usb/GPSensData.csv')

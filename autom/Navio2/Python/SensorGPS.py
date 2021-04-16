@@ -50,24 +50,23 @@ if __name__ == "__main__":
 	
 	adc = navio.adc.ADC()
 	voltread = adc.read(2)/1000*11.3 #Initial Voltage value from Power Module (ADC0)
-	#currread = adc.read(3)/1000*17 #Initial Current value from Power Module (ADC1)
 	start_time = time.time() #in seconds
 	elapsedtime = 0 #in seconds
 	ser.write('\r')
-	time.sleep(1)
 	
 	while voltread >= 12.7 and elapsedtime <= 60: #Continue reading GPS+Sens until voltread < 12.7V or flight time > 10 min
 		while True:
 			try:
 				msg = ubl.receive_message()
-				#print(msg)
 				if msg is None:
 					if opts.reopen:
 						ubl.close()
 						ubl = navio.ublox.UBlox("spi:0.0", baudrate=5000000, timeout=2) #timeout = 2
+						raise serial.SerialException
 						continue
-					print(empty)
-					break
+					raise serial.SerialException
+					#print(empty)
+					#break
 				#print(msg.name())		
 				if msg.name() == "NAV_POSLLH":
 					outstr = str(msg) .split(",")[1:]
@@ -85,13 +84,12 @@ if __name__ == "__main__":
 					fullstr = outstr + ", " + output
 					text_file.write(fullstr)
 					print(fullstr)
-					voltread = adc.read(2)/1000*11.3
-					#currread = adc.read(3)/1000*17
-					elapsedtime = time.time() - start_time
-					print(elapsedtime, 'Seconds. Voltage Reading', voltread)
 					break #Break out of Try-Except if no errors are found
 			except serial.SerialException:
 				print("No Data Received from NO2 Sensor, Try Again...")
+		voltread = adc.read(2)/1000*11.3
+		elapsedtime = time.time() - start_time
+		print(elapsedtime, 'Seconds. Voltage Reading', voltread)
 text_file.close()
 ser.close() # Close Serial port 
 os.system('sudo cp -f /home/pi/Drone-Sensing-Application/autom/Navio2/Python/TestData.csv /media/usb/GPSensData.csv')

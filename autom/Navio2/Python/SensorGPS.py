@@ -85,7 +85,7 @@ if __name__ == "__main__":
 				#print(outstr)
 				ser.write('\r')
 				output = ser.readline()
-				if len(output) < 60 or len(outstr) == 0:
+				if len(output) < 63 or len(outstr) == 0:
 					raise serial.SerialException
 			else:
 				raise serial.SerialException

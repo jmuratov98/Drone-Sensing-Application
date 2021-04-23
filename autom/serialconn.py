@@ -4,7 +4,7 @@ import csv
 
 time.sleep(120)
 i = 0 # Initializer of amount of data to be collected
-ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600) # Serial port connection (subject to change on RPI)
+ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600, timeout=2) # Serial port connection (subject to change on RPI)
 usbmountpath = "/media/usb" #For USB not Plugged in, close Sensor Connection and Script
 if os.path.ismount(usbmountpath) == False:
 	ser.close()

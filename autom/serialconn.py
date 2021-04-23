@@ -5,6 +5,10 @@ import csv
 time.sleep(120)
 i = 0 # Initializer of amount of data to be collected
 ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600) # Serial port connection (subject to change on RPI)
+usbmountpath = "/media/usb" #For USB not Plugged in, close Sensor Connection and Script
+if os.path.ismount(usbmountpath) == False:
+	ser.close()
+	sys.exit("Closed NO2 Sensor Connection. Reboot System with USB connected") # USB not mounted
 #print(ser.name)
 ser.write('\r') # Exit Low Power Mode (can be any key)
 time.sleep(1)
@@ -31,6 +35,7 @@ ser.close() # Close Serial port
 
 #shutil.copy('/home/pi/Drone-Sensing-Application/autom/test.csv', '/media/usb/test.csv') #copies file from RPI to USB Drive
 os.system('sudo cp -f /home/pi/Drone-Sensing-Application/autom/test.csv /media/usb/data.csv')
+os.system('sudo eject /dev/sda1')
 
 #when doing cronjob, do this:
 # @reboot  /bin/python /home/pi/Drone-Sensing-Application/autom/serialconn.py

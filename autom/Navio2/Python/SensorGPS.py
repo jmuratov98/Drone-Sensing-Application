@@ -69,7 +69,6 @@ if __name__ == "__main__":
 				ubl.close()
 				ubl = navio.ublox.UBlox("spi:0.0", baudrate=5000000, timeout=1) #timeout = 2
 				continue
-			#raise serial.SerialException
 			print(empty)
 			break
 		#print(msg.name())		
@@ -90,8 +89,6 @@ if __name__ == "__main__":
 				#print(len(output))
 				if len(output) <= 52 or len(outstr) == 0:
 					raise serial.SerialException
-			#else:
-			#	raise serial.SerialException
 			except serial.SerialException:
 				print("No Data Received from NO2 Sensor, Try Again...")
 			else:

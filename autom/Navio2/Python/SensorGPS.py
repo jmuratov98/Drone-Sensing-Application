@@ -5,6 +5,7 @@ import csv
 import os, time, sys
 import serial, string
 
+time.sleep(120)
 ser = serial.Serial('/dev/ttyUSB0', baudrate=9600, timeout=2) # Serial port connection (subject to change on RPI)
 
 usbmountpath = "/media/usb" #For USB not Plugged in, close Sensor Connection and Script

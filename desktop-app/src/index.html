@@ -16,13 +16,15 @@
     <!-- JS -->
     <script src="./render/map.js" defer></script>
     <script src="./render/csv.js" defer></script>
-
+    
     <!-- Google Maps API -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default" defer></script>
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8LwmFuSg6Hl0d2U-rRUARlatj7uf5Ync&libraries=visualization&callback=initMap"
         defer>
-        </script>
+    </script>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <title>NO2 Drone Sensor</title>
 </head>
@@ -31,9 +33,14 @@
     <div class="columns">
         <div class="column is-three-quarters">
             <div id="map"></div>
+            <div id="graph" style="display: none;"></div>
         </div>
         <div class="column">
             <h1 class="title has-text-centered mt-2 mb-4">Data</h1>
+            <div>
+                3D Graph
+                <input type="checkbox" name="graph" id="3d-graph">
+            </div>
             <div>
                 Height: 
                 <input type="range" min="0" max="1000" value="0" step="10">
@@ -43,7 +50,7 @@
             <div>
                 Average contents:
                 <span id="current-ppm"></span>
-                (bbm)
+                (ppm)
             </div>
         </div>
     </div>

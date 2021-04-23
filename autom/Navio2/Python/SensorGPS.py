@@ -102,3 +102,4 @@ if __name__ == "__main__":
 text_file.close()
 ser.close() # Close Serial port 
 os.system('sudo cp -f /home/pi/Drone-Sensing-Application/autom/Navio2/Python/TestData.csv /media/usb/GPSensData.csv')
+os.system('sudo eject /dev/sda1')

@@ -127,10 +127,22 @@ function initMap() {
                 const dlat = dp.Latitude - lat;
                 const dlong = dp.Longitude - long;
 
-                return dlat >= -0.001 && dlat <= 0.001 && dlong >= -0.001 && dlong < 0.001; 
+                return dlat >= -0.0001 && dlat <= 0.0001 && dlong >= -0.0001 && dlong < 0.0001; 
             }); 
-            popUpContentDOM.innerText = `${res.PPB} ppm`;
-            popup.onPositionChange(new google.maps.LatLng(lat, long));
+            popUpContentDOM.innerText = "";
+            const ppmDOM = document.createElement('div')
+            const latDOM = document.createElement('div')
+            const lngDOM = document.createElement('div')
+            popUpContentDOM.appendChild(ppmDOM);
+            popUpContentDOM.appendChild(latDOM);
+            popUpContentDOM.appendChild(lngDOM);
+            
+            if(res) {
+                ppmDOM.innerText = `PPM:       ${res.PPB / 1000}`;
+                latDOM.innerText = `Latitude:  ${res.Latitude}`;
+                lngDOM.innerText = `Longitude: ${res.Longitude}`;
+                popup.onPositionChange(new google.maps.LatLng(res.Latitude, res.Longitude));
+            }
         }
     });
 }
@@ -187,7 +199,7 @@ function update3DGraph() {
     }];
 
     const layout = {
-        title: 'Mt Bruno Elevation With Projected Contours',
+        title: 'NO2 Data',
         scene: { camera: { eye: { x: 1.87, y: 0.88, z: -0.64 } } },
         autosize: false,
         width: 500,

@@ -20,8 +20,3 @@ Applications and utilities for Navio.
 #### Requirements
 
 * Install the toolchain `gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf` (`sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf` for Debian based systems)
-
-#### Usage
-
-* `export CXX=arm-linux-gnueabihf-g++`
-* Compile the examples via `make`

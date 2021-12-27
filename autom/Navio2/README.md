@@ -1,7 +1,7 @@
 Navio 2
 =====
 
-Collection of drivers for Navio 2 - autopilot shield for Raspberry Pi.
+Collection of python code and Navio2 Based Drivers (Utilities Folder) for Navio 2 with Raspberry Pi
 
 ## Repository structure
 

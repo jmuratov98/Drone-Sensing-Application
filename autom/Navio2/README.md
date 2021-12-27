@@ -1,7 +1,7 @@
 Navio 2
 =====
 
-Collection of python code and Navio2 Based Drivers (Utilities Folder) for Navio 2 with Raspberry Pi
+Collection of python code and Navio2 Based Drivers (Utilities Folder and Python->Navio Folder) for Navio 2 with Raspberry Pi
 
 ## Repository structure
 

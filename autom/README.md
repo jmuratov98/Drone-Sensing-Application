@@ -1,5 +1,5 @@
 The "SensorGPS.py" script is proven to work under python 2.7 on a Ubuntu-based System and Debian Based OS (RPI).
-The "TestData.csv" file is a temporary file that will store the DGS-NO2 Sensor data and ublox neo-m8n GPS Data.
+The "TestData.csv" file is a temporary file that will store the DGS-NO2 Sensor data and ublox neo-m8n GPS Data. Note: The complete SensorGPS.py file is in Python-> Utilities and look for SensorGPS.py file. The one here was a test file used for confirming sensor reliability. The complete version includes GPS and proper USB functionalities.
 
 To do an SSH connection between the Raspberry Pi and your Computer, you can do the following:
 
